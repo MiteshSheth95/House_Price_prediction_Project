@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pune House Price Prediction</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+	<!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="../static/main.css"> -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="img"></div>
+<!-- Navbar -->
+	<div class="nav">
+		<div class="nav w3-Grey w3-card">
+		<a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+	  	<a href="#About" class="w3-bar-item w3-button w3-padding-large">About</a>	  
+	 	<a href="#Price Prediction" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Price Prediction</a>
+		<a href="#Trending Areas" class="w3-bar-item w3-button w3-padding-large">Trending Areas</a>
+	  	<a href="#Contact Us" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Contact Us</a>
+	  	</div>
+
+	</div>
+ 
+	<div class="w3-container w3-content w3-Left w3-padding-40" style="max-width:1400px" id="About">
+		<h1 class="title">About Us</h1>
+		<h1 class="about">
+		<p>Housing prices are an important reflection of the economy, and housing price ranges are of great interest for both buyers and sellers. 
+		In this project, house prices will be predicted from explanatory variables that cover many aspects of residential houses.
+		Accurately predicting house prices can be a daunting task.</p>
+		<p>The buyers are just not concerned about the size (square feet) of the house and there are various other factors that play a key role to decide the price of a house/property. 
+		It can be extremely difficult to figure out the right set of attributes that are contributing to understanding the buyer's behaviour as such.</p>
+		</h1>
+	</div>
+
+	
+
+	<div class="w3-container w3-content w3-Left w3-padding-40" style="max-width:1400px" id="Price Prediction">
+	<h1 class="title">Pune House Price Prediction </h1>
+	</div>
+
+	<form class="form" method="post" action="{{ url_for('predict')}}" >
+		<h2 class="underconstruction">Under Construction</h2>
+		<div class="switch-field">
+			<input type="radio" id="radio-uc-1" name="uiuc" value="1" checked/>
+			<label for="radio-uc-1">Yes</label>
+			<input type="radio" id="radio-uc-2" name="uiuc" value="0"/>
+			<label for="radio-uc-2">No</label>
+		</div>
+		<h2 class="rera">RERA Approved</h2>
+		<div class="switch-field">
+			<input type="radio" id="radio-rera-1" name="uirera" value="1" checked/>
+			<label for="radio-rera-1">Yes</label>
+			<input type="radio" id="radio-rera-2" name="uirera" value="0"/>
+			<label for="radio-rera-2">No</label>
+		</div>	
+		<h2 class="bhk">BHK</h2>	
+		<div class="switch-field">
+			<input type="radio" id="radio-bhk-1" name="uiBHK" value="1" checked/>
+			<label for="radio-bhk-1">1</label>
+			<input type="radio" id="radio-bhk-2" name="uiBHK" value="2"/>
+			<label for="radio-bhk-2">2</label>
+			<input type="radio" id="radio-bhk-3" name="uiBHK" value="3"/>
+			<label for="radio-bhk-3">3</label>
+			<input type="radio" id="radio-bhk-4" name="uiBHK" value="4"/>
+			<label for="radio-bhk-4">4</label>
+			<input type="radio" id="radio-bhk-5" name="uiBHK" value="5"/>
+			<label for="radio-bhk-5">5</label>
+		</div>
+		<h2 class="sqft">Area in Sq. ft</h2>
+		<input class="area"  type="number" id="uiSqft" class="floatLabel" name="Squareft"  required="required">
+		<h2 class="rtm">Ready to Move</h2>
+			<div class="switch-field">
+				<input type="radio" id="radio-rtm-2" name="uirtm" value="1"checked/>
+				<label for="radio-rtm-2">Yes</label>
+				<input type="radio" id="radio-rtm-1" name="uirtm" value="0" />
+				<label for="radio-rtm-1">No</label>		
+			</div>
+		<h2 class="resale">Resale</h2>
+		<div class="switch-field">
+			<input type="radio" id="radio-resale-1" name="uiresale" value="1" checked/>
+			<label for="radio-resale-1">Yes</label>
+			<input type="radio" id="radio-resale-2" name="uiresale" value="0"/>
+			<label for="radio-resale-2">No</label>
+		</div>	
+		<h2 class="loc">Location</h2>
+		<div>
+			<select class="location" name="area" id="uiLocations" required="required">
+			<option value="" disabled="disabled" selected="selected">Select Location</option>
+				{% for area in areas %}
+				<option value= "{{area}}">{{area}}</option>"
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	
+		<button class="submit"  type="submit">ESTIMATE</button>
+		<div class="result">	
+			<h3>{{prediction_text }}</h3> 
+		</div>
+	</form>
+	
+
+	<!-- Automatic Slideshow Images -->
+	<div class="w3-container w3-content w3-Left w3-padding-16" id="Trending Areas"></div>
+		<div class="mySlides w3-display-container w3-center">
+	<img src="{{ url_for('static', filename='hinjewadi_new.jpg') }}" height="200px" style="width:100%">
+	<div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">   
+	</div>
+		</div>
+
+	<div class="mySlides w3-display-container w3-center">
+		<img src="{{ url_for('static', filename='baner_new.jpg') }}" height="200px" style="width:100%">
+		<div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">    
+		</div>
+	</div>
+
+	<div class="mySlides w3-display-container w3-center">
+		<img src="{{ url_for('static', filename='wakad_new.jpg') }}" height="200px" style="width:100%">
+		<div class="w3-display-bottommiddle w3-container w3-text-white w3-padding-32 w3-hide-small">    
+		</div>
+	</div>
+
+	<div class="w3-container w3-content w3-Left w3-padding-64" style="max-width:1400px" id="Contact Us">
+		<h1 class="title">Contact</h1>
+		<h1 class="about">Email-id : support_housepriceprediction@gmail.com</h1>
+		<h1 class="about">Contact Number (+91) 7666628774 </h1>
+		<h1 class="about">Pune , India</h1>
+	</div>
+</body>
+</html>
+<script>
+	// Automatic Slideshow - change image every 4 seconds
+	var myIndex = 0;
+	carousel();
+	
+	function carousel() {
+	  var i;
+	  var x = document.getElementsByClassName("mySlides");
+	  for (i = 0; i < x.length; i++) {
+		x[i].style.display = "none";  
+	  }
+	  myIndex++;
+	  if (myIndex > x.length) {myIndex = 1}    
+	  x[myIndex-1].style.display = "block";  
+	  setTimeout(carousel, 4000);
+	      
+	}
+</script>	
